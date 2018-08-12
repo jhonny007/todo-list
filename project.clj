@@ -6,10 +6,12 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [ring "1.4.0"]
                  [hiccup "1.0.5"]
+                 [hiccup-bootstrap "0.1.2"]
                  [compojure "1.5.1"]
                  [org.clojure/java.jdbc "0.3.7"]
                  [postgresql/postgresql "9.1-901-1.jdbc4"]]
   :main todo-list.core
+  :resource-paths ["resources"]
   :min-lein-version "2.0.0"
   :uberjar-name "todo-list.jar"
   :auto-clean false

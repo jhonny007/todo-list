@@ -3,10 +3,14 @@
    [compojure.core :refer [defroutes GET]]
    [ring.handler.dump :refer [handle-dump]] 
    [compojure.route :refer [not-found]]
+   [clojure.string :refer [capitalize]]
    )
   (:use
    [hiccup.core]
-   [hiccup.page]))
+   [hiccup.page]
+   [hiccup.bootstrap.page]
+   [hiccup.bootstrap.middleware]
+   [ring.middleware.resource]))
 
 (defn welcome
   "A ring handler to process all requests sent to the webapp."
@@ -61,6 +65,67 @@
        :body "Sorry, unknown operator.  I only recognise + - * : (: is for division)"
        :headers {}})))
 
+(defn include-bootstrap-scripts
+  []
+  (list  [:script
+          {:crossorigin "anonymous",
+           :integrity
+           "sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo",
+           :src "https://code.jquery.com/jquery-3.3.1.slim.min.js"}]
+         [:script
+          {:crossorigin "anonymous",
+           :integrity
+           "sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49",
+           :src
+           "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"}]
+         [:script
+          {:crossorigin "anonymous",
+           :integrity
+           "sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy",
+           :src
+           "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"}]))
+
+(defn include-bootstrap-css
+  []
+  (include-css "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"))
+
+(defn alphabet 
+  [request]
+
+  
+  (html5
+   [:head
+    [:title "Alphabet English"]
+    (include-bootstrap-css)
+    ]
+   [:body
+    [:h1  "Alphabet"]
+    [:ul [:li [:a {:href "alphabet/apple"} "Apple"]]]
+    (include-bootstrap-scripts)]))
+
+(defn page 
+  [request]
+
+  (let 
+      [name (String. (get-in request [:route-params :name]))
+       name-capitalized (capitalize name)]
+    (html5
+     [:head
+      [:title name-capitalized]
+      (include-bootstrap-css)
+      ]
+     [:body
+      [:h1 name-capitalized ]
+      [:div#carouselExampleSlidesOnly.carousel.slide
+       {:data-ride "carousel"}
+       [:div.carousel-inner 
+        [:div.carousel-item.active
+         [:img.d-block.w-100 {:alt "First slide", :src (str "/images/" name "1.jpg")}]]
+        [:div.carousel-item
+         [:img.d-block.w-100 {:alt "Second slide", :src (str "/images/" name "2.jpg")}]]
+        [:div.carousel-item
+         [:img.d-block.w-100 {:alt "Third slide", :src (str "/images/" name "3.jpg")}]]]] (include-bootstrap-scripts)])))
+
 (defroutes base
   (GET "/" [] welcome)
   (GET "/goodbye" [] goodbye)
@@ -68,5 +133,9 @@
   (GET "/request-info" [] handle-dump)
   (GET "/hello/:name" [] hello)
   (GET "/calculator/:op/:a/:b" [] calculator)
+  (GET "/alphabet" [] alphabet)
+  (GET "/alphabet/:name" [] page)
+  (wrap-resource [] "public")
+  (wrap-bootstrap-resources [])
   (not-found "<h1>This is not the page you are looking for</h1>
    <p>Sorry, the page you requested wass not found!</p>"))

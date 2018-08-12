@@ -4,6 +4,7 @@
             [compojure.core :refer [routes]]
             [hiccup.core :refer :all]
             [hiccup.page :refer :all]
+;;            [hiccup.bootstrap.middleware :refer :all]
             [todo-list.handlers :refer [base]]
             [todo-list.worms :refer [myname]] ))
 
