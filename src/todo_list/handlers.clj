@@ -100,7 +100,11 @@
     ]
    [:body
     [:h1  "Alphabet"]
-    [:ul [:li [:a {:href "alphabet/apple"} "Apple"]]]
+    [:ul 
+     [:li [:a {:href "alphabet/apple"} "Apple"]]
+     [:li [:a {:href "alphabet/banana"} "Banana"]]
+     [:li [:a {:href "alphabet/carrot"} "Carrot"]]
+     [:li [:a {:href "alphabet/pear"} "Pear"]]]
     (include-bootstrap-scripts)]))
 
 (defn page 
