@@ -91,8 +91,6 @@
 
 (defn alphabet 
   [request]
-
-  
   (html5
    [:head
     [:title "Alphabet English"]
@@ -109,7 +107,6 @@
 
 (defn page 
   [request]
-
   (let 
       [name (String. (get-in request [:route-params :name]))
        name-capitalized (capitalize name)]
@@ -128,7 +125,8 @@
         [:div.carousel-item
          [:img.d-block.w-100 {:alt "Second slide", :src (str "/images/" name "2.jpg")}]]
         [:div.carousel-item
-         [:img.d-block.w-100 {:alt "Third slide", :src (str "/images/" name "3.jpg")}]]]] (include-bootstrap-scripts)])))
+         [:img.d-block.w-100 {:alt "Third slide", :src (str "/images/" name "3.jpg")}]]]] 
+      (include-bootstrap-scripts)])))
 
 (defroutes base
   (GET "/" [] welcome)
