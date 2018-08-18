@@ -7,13 +7,16 @@
                  [ring "1.4.0"]
                  [hiccup "1.0.5"]
                  [hiccup-bootstrap "0.1.2"]
-                 [compojure "1.5.1"]
+                 [compojure "1.5.2"]
                  [org.clojure/java.jdbc "0.3.7"]
-                 [postgresql/postgresql "9.1-901-1.jdbc4"]]
+                 [korma "0.4.0"]
+                 [org.postgresql/postgresql "9.2-1002-jdbc4"]
+                 [com.h2database/h2 "1.3.170"]]
   :main todo-list.core
   :resource-paths ["resources"]
   :min-lein-version "2.0.0"
   :uberjar-name "todo-list.jar"
   :auto-clean false
   :profiles {:dev
-             {:main todo-list.core/-dev-main}})
+             {:main todo-list.core/-dev-main}}
+  )
