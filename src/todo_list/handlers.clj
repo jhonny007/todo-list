@@ -70,9 +70,9 @@
 (def apple (struct food "apple" 173 144 ))
 (def banana (struct food "banana" 249 157))
 (def carrot (struct food "carrot" 87 67 ))
-(def peal  (struct food "peal" 162 142 ))
+(def pear  (struct food "pear" 162 142 ))
 
-(def foods [apple banana carrot peal])
+(def foods [apple banana carrot pear])
 
 (defn alphabet
   "Overview of available pictures of the alphabet"
